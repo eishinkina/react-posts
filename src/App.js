@@ -1,39 +1,31 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/App.css";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import PostsFilter from "./components/PostsFilter";
 import MyModal from "./components/UI/Modal/MyModal";
 import MyButton from "./components/UI/Button/MyButton";
+import { usePosts } from "./Hooks/usePosts";
+import PostService from "./API/PostService";
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: 1, title: "Javascript", body: "Description" },
-    { id: 2, title: "Javascript 2", body: "Description" },
-    { id: 3, title: "Javascript 3", body: "Description" },
-  ]);
+  const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({ sort: "", query: "" });
   const [modal, setModal] = useState(false);
+  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
-  const sortedPosts = useMemo(() => {
-    if (filter.sort) {
-      console.log("Отработала функция сортед постс");
-      return [...posts].sort((a, b) =>
-        a[filter.sort].localeCompare(b[filter.sort])
-      );
-    }
-    return posts;
-  }, [filter.sort, posts]);
+  useEffect(() => {
+    fetchPosts()
+  }, [])
 
-  const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter((post) =>
-      post.title.toLowerCase().includes(filter.query)
-    );
-  }, [filter.query, sortedPosts]);
+  async function fetchPosts() {
+    const posts = await PostService.getAll()
+    setPosts(posts)
+  }
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
-    setModal(false)
+    setModal(false);
   };
 
   //получаем пост из дочернего компонента
@@ -43,7 +35,9 @@ function App() {
 
   return (
     <div className="App">
-      <MyButton style={{marginTop: 30}} onClick={() => setModal(true)}>Создать пост</MyButton>
+      <MyButton style={{ marginTop: 30 }} onClick={() => setModal(true)}>
+        Создать пост
+      </MyButton>
       <MyModal visible={modal} setVisible={setModal}>
         <PostForm create={createPost} />
       </MyModal>
