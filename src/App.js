@@ -10,6 +10,7 @@ import PostsFilter from "./components/PostsFilter";
 import MyModal from "./components/UI/Modal/MyModal";
 import MyButton from "./components/UI/Button/MyButton";
 import Loader from "./components/UI/Loader/Loader";
+import Pagination from "./components/UI/Pagination/Pagination";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -20,8 +21,6 @@ function App() {
   const [page, setPage] = useState(1);
 
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
-
-  let pagesArray = getPagesArray(totalPages);
 
   const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
     const response = await PostService.getAll(limit, page);
@@ -47,7 +46,7 @@ function App() {
 
   //пагинация
   const changePage = (page) => {
-    setPage(page);  
+    setPage(page);
   };
 
   return (
@@ -74,19 +73,7 @@ function App() {
           title="Cписок постов 1"
         />
       )}
-      <div className="page__wrapper">
-        {pagesArray.map((p) => {
-          return (
-            <span
-              onClick={() => changePage(p)}
-              key={p}
-              className={page === p ? "page page__current" : "page"}
-            >
-              {p}
-            </span>
-          );
-        })}
-      </div>
+      <Pagination page={page} changePage={changePage} totalPages={totalPages} />
     </div>
   );
 }
