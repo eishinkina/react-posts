@@ -1,20 +1,19 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import About from '../Pages/About'
-import Posts from '../Pages/Posts'
-import Error from '../Pages/Error'
-
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { routes } from "../Router/Router";
 
 const AppRouter = () => {
   return (
     <div>
       <Routes>
-        <Route path="/about" element={<About />} />
-        <Route path="/posts" element={<Posts />} />
-        <Route path="*" element={<Error />} />
+        {routes.map((route, index) => {
+          return (
+            <Route key={index} element={route.element} path={route.path} />
+          );
+        })}
       </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default AppRouter
+export default AppRouter;
