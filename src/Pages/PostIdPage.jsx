@@ -24,22 +24,22 @@ const PostIdPage = () => {
   }, [params]);
   return (
     <div>
-      <h1>Вы открыли страницу поста c ID = {params.id}</h1>
+      <h1 style={{marginBottom:"20px", textAlign:"center"}}>Вы открыли страницу поста c ID = {params.id}</h1>
       {isLoading ? (
         <Loader />
       ) : (
-        <div>
+        <div style={{textAlign:"center"}}>
           {post.id}. {post.title}
         </div>
       )}
-      <h1>Комментарии</h1>
+      <h1 style={{marginTop:"30px", textAlign:"center"}}>Комментарии</h1>
       {isComLoading ? (
         <Loader />
       ) : (
         <div>
           {comments.map((comm) => {
             return (
-              <div key={comm.id} style={{ marginTop: "15px", width: "100vh" }}>
+              <div key={comm.id} style={{ marginTop: "25px", width: "100%", maxWidth:"800px" }}>
                 <h5>{comm.email}</h5>
                 <div>{comm.body}</div>
               </div>
