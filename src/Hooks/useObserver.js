@@ -20,5 +20,5 @@ export const useObserver = (ref, canLoad, isLoading, callback) => {
         observer.current.unobserve(ref.current);
       }
     };
-  }, [isLoading, canLoad, callback]);z
+  }, [isLoading, canLoad, callback]);
 };

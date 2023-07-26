@@ -46,6 +46,7 @@
 .page__wrapper {
     margin-top: 30px;
     display: flex;
+    align-items: center;
 }
 
 .page {
@@ -70,4 +71,14 @@
 
 .navbar__links {
     margin-left: auto;
+}
+
+.links {
+    padding: 5px 15px;
+    color: teal;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid teal;
+    cursor: pointer;
+    text-decoration: none;
 }
