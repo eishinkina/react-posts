@@ -82,3 +82,13 @@
     cursor: pointer;
     text-decoration: none;
 }
+
+.link__li {
+    margin-top: 30px;
+    font-size: 30px;
+    padding-bottom: 30px;
+}
+
+li {
+    margin-bottom: 30px;
+}
